@@ -18,3 +18,6 @@ instance Functor Parser where
     case p cs of
       Just (v, cs') -> Just (f v, cs')
       _ -> Nothing
+
+instance Applicative Parser where
+  pure v = Parser $ \cs -> Just (v, cs)

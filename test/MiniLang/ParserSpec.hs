@@ -23,3 +23,7 @@ spec = do
     context "when fail to parse" $ do
       it "return Nothing" $ do
         parse parser "good bye" `shouldBe` Nothing
+
+  describe "pure" $ do
+    it "return Parser" $ do
+      parse (pure 1) "Haskell" `shouldBe` Just (1, "Haskell")
