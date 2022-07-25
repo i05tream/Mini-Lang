@@ -19,9 +19,7 @@ match p = Parser $ \(c : cs) -> if p c then Just (c, cs) else Nothing
 
 -- 文字を与えるとその1文字を解析するパーサを返す関数
 char :: Char -> Parser Char
-char c = Parser $ \case
-                    (c' : cs') | c == c' -> Just (c, cs')
-                    _ -> Nothing
+char c = match (== c)
 
 instance Functor Parser where
   fmap f (Parser p) = Parser $ \cs ->

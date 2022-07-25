@@ -22,7 +22,7 @@ spec = do
 
     context "when String doesn't match predicate" $ do
       it "fail to parse" $ do
-        parse (match (== 'H') "hello" `shouldBe` Nothing
+        parse (match (== 'H')) "hello" `shouldBe` Nothing
 
   describe "char" $ do
     context "when succeed in parsing" $ do
