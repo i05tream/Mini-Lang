@@ -34,6 +34,16 @@ spec = do
       it "return Nothing" $ do
         parse (char 'h') "good bye" `shouldBe` Nothing
 
+  describe "digit" $ do
+    context "when digit is passed" $ do
+      it "succeed in parsing and return Integer" $ do
+        parse digit "1ab" `shouldBe` Just (1, "ab")
+
+  describe "number" $ do
+    context "when digits is passed" $ do
+      it "succeed in parsing and return Integer" $ do
+        parse number "12ab" `shouldBe` Just (12, "ab")
+
   describe "fmap" $ do
     let parser = fmap toUpper (char 'h')
     context "when succeed in parsing" $ do

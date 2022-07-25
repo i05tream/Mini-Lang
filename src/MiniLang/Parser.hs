@@ -2,7 +2,8 @@
 
 module MiniLang.Parser where
 
-import Control.Applicative (Alternative, empty, (<|>))
+import Data.Char (isDigit)
+import Control.Applicative (Alternative, empty, (<|>), some)
 
 newtype Parser a = Parser (String -> Maybe (a, String))
 
@@ -22,6 +23,16 @@ match p = Parser $ \(c : cs) -> if p c then Just (c, cs) else Nothing
 -- 文字を与えるとその1文字を解析するパーサを返す関数
 char :: Char -> Parser Char
 char c = match (== c)
+
+digit :: Parser Integer
+digit = do
+  c <- match isDigit
+  return $ read [c]
+
+number :: Parser Integer
+number = do
+  cs <- some . match $ isDigit
+  return $ read cs
 
 instance Monad Parser where
   return v = Parser $ \cs -> Just(v, cs)
