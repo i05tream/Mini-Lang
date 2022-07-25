@@ -6,6 +6,15 @@ import MiniLang.Parser
 
 spec :: Spec
 spec = do
+  describe "item" $ do
+    context "when non-blank String is passed" $ do
+      it "succeed in parsing" $ do
+        parse item "hello" `shouldBe` Just('h', "ello")
+
+    context "when blank String is passed" $ do
+      it "fail to parsing" $ do
+        parse item "" `shouldBe` Nothing
+
   describe "char" $ do
     context "when succeed in parsing" $ do
       it "return Char And rest String" $ do
