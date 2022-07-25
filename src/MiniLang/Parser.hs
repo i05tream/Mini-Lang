@@ -13,6 +13,10 @@ item = Parser $ \case
                   (c : cs) -> Just (c, cs)
                   _ -> Nothing
 
+-- 条件に合う1文字を取り出すパーサ
+match :: (Char -> Bool) -> Parser Char
+match p = Parser $ \(c : cs) -> if p c then Just (c, cs) else Nothing
+
 -- 文字を与えるとその1文字を解析するパーサを返す関数
 char :: Char -> Parser Char
 char c = Parser $ \case
