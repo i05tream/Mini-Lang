@@ -15,6 +15,15 @@ spec = do
       it "fail to parsing" $ do
         parse item "" `shouldBe` Nothing
 
+  describe "match" $ do
+    context "when String matches predicate" $ do
+      it "succeed in parsing" $ do
+        parse (match (== 'H')) "Hello" `shouldBe` Just('H', "ello")
+
+    context "when String doesn't match predicate" $ do
+      it "fail to parse" $ do
+        parse (match (== 'H') "hello" `shouldBe` Nothing
+
   describe "char" $ do
     context "when succeed in parsing" $ do
       it "return Char And rest String" $ do
