@@ -2,6 +2,8 @@
 
 module MiniLang.Parser where
 
+import Control.Applicative (Alternative, empty, (<|>))
+
 newtype Parser a = Parser (String -> Maybe (a, String))
 
 parse :: Parser a -> String -> Maybe (a, String)
@@ -41,3 +43,11 @@ instance Functor Parser where
   fmap f p = Parser $ \cs -> do
     (v, cs') <- parse p cs
     return (f v, cs')
+
+instance Alternative Parser where
+  empty = Parser $ const Nothing
+
+  p <|> p' = Parser $ \cs ->
+    case parse p cs of
+      Nothing -> parse p' cs
+      x -> x

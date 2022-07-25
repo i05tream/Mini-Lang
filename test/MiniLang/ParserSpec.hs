@@ -1,6 +1,7 @@
 module MiniLang.ParserSpec where
 
 import Data.Char (toUpper)
+import Control.Applicative ((<|>))
 import Test.Hspec
 import MiniLang.Parser
 
@@ -59,3 +60,13 @@ spec = do
 
     it "apply item twice" $ do
       parse (item >>= \c -> item >>= \c' -> return [c, c']) "Haskell" `shouldBe` Just ("Ha", "skell")
+
+  describe "<|>" $ do
+    let parseA = char 'A'
+        parseB = char 'B'
+    context "when either parseA or parseB matches" $ do
+      it "succeed in parsing" $ do
+        parse (parseA <|> parseB) "A" `shouldBe` Just ('A', "")
+    context "when neither parseA nor parseB matches" $ do
+      it "failed to parse" $ do
+        parse (parseA <|> parseB) "C" `shouldBe` Nothing
