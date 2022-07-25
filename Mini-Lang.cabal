@@ -26,7 +26,9 @@ source-repository head
 library
   exposed-modules:
       Lib
+      MiniLang.Data.AST
       MiniLang.Parser
+      MiniLang.Parser.AST
   other-modules:
       Paths_Mini_Lang
   hs-source-dirs:
@@ -51,6 +53,7 @@ test-suite Mini-Lang-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      MiniLang.Parser.ASTSpec
       MiniLang.ParserSpec
       Paths_Mini_Lang
   hs-source-dirs:
