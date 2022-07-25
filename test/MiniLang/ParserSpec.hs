@@ -42,6 +42,20 @@ spec = do
       it "return Nothing" $ do
         parse parser "good bye" `shouldBe` Nothing
 
-  describe "pure" $ do
+  describe "<*>" $ do
+    context "when succeed in parsing" $ do
+      it "" $ do
+        parse (Parser (\(c : cs) -> Just (toUpper, cs)) <*> item) "abc" `shouldBe` Just ('B', "c")
+
+    context "when fail to parse" $ do
+      it "" $ do
+        parse (Parser (\_ -> Nothing) <*> item) "abc" `shouldBe` (Nothing :: Maybe (Char, String))
+
+  describe "return" $ do
     it "return Parser" $ do
-      parse (pure 1) "Haskell" `shouldBe` Just (1, "Haskell")
+      parse (return 1) "Haskell" `shouldBe` Just (1, "Haskell")
+
+  describe ">>=" $ do
+
+    it "apply item twice" $ do
+      parse (item >>= \c -> item >>= \c' -> return [c, c']) "Haskell" `shouldBe` Just ("Ha", "skell")

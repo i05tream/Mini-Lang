@@ -21,11 +21,23 @@ match p = Parser $ \(c : cs) -> if p c then Just (c, cs) else Nothing
 char :: Char -> Parser Char
 char c = match (== c)
 
-instance Functor Parser where
-  fmap f (Parser p) = Parser $ \cs ->
-    case p cs of
-      Just (v, cs') -> Just (f v, cs')
+instance Monad Parser where
+  return v = Parser $ \cs -> Just(v, cs)
+
+  p >>= f = Parser $ \cs -> 
+    case parse p cs of
+      Just (x, cs') -> parse (f x) cs'
       _ -> Nothing
 
 instance Applicative Parser where
-  pure v = Parser $ \cs -> Just (v, cs)
+  pure = return
+
+  mf <*> mx = Parser $ \cs -> do
+    (f, cs')  <- parse mf cs
+    (v, cs'') <- parse mx cs'
+    return (f v, cs'')
+
+instance Functor Parser where
+  fmap f p = Parser $ \cs -> do
+    (v, cs') <- parse p cs
+    return (f v, cs')
