@@ -36,7 +36,7 @@ number = natural <|> zero
       return . read $ c : cs
 
     nonZeroDigit :: Parser Char
-    nonZeroDigit = match (`elem` "123456789")
+    nonZeroDigit = match (`elem` ['1'..'9'])
 
     zero :: Parser Integer
     zero = do
