@@ -40,7 +40,7 @@ number = natural <|> zero
 
     zero :: Parser Integer
     zero = do
-      match (== '0')
+      char '0'
       return 0
 
 instance Monad Parser where
