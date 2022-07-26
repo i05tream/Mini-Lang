@@ -26,19 +26,22 @@ match p = Parser $ \case
 char :: Char -> Parser Char
 char c = match (== c)
 
-nonZeroDigit :: Parser Char
-nonZeroDigit = match (`elem` "123456789")
-
 number :: Parser Integer
-number =
-  do
-    c <- nonZeroDigit
-    cs <- many . match $ isDigit
-    return . read $ c : cs
-  <|>
-  do
-    c <- match (== '0')
-    return 0
+number = natural <|> zero
+  where
+    natural :: Parser Integer
+    natural = do
+      c <- nonZeroDigit
+      cs <- many . match $ isDigit
+      return . read $ c : cs
+
+    nonZeroDigit :: Parser Char
+    nonZeroDigit = match (`elem` "123456789")
+
+    zero :: Parser Integer
+    zero = do
+      match (== '0')
+      return 0
 
 instance Monad Parser where
   return v = Parser $ \cs -> Just(v, cs)
