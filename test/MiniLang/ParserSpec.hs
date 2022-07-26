@@ -36,12 +36,12 @@ spec = do
 
   describe "number" $ do
     context "when String starts with digits" $ do
-      context "when digits are valid number" $ do
+      context "when String starts with natural number" $ do
         it "succeed in parsing and return Integer" $ do
           parse number "12ab" `shouldBe` Just (12, "ab")
-      context "when digits are invalid number" $ do
-        it "fail to parsing" $ do
-          parse number "01ab" `shouldBe` Nothing
+      context "when String starts with 0" $ do
+        it "succeed in parsing and return 0" $ do
+          parse number "01ab" `shouldBe` Just (0, "1ab")
 
   describe "fmap" $ do
     let parser = fmap toUpper (char 'h')
