@@ -26,11 +26,6 @@ match p = Parser $ \case
 char :: Char -> Parser Char
 char c = match (== c)
 
-digit :: Parser Integer
-digit = do
-  c <- match isDigit
-  return $ read [c]
-
 number :: Parser Integer
 number = do
   cs <- some . match $ isDigit
