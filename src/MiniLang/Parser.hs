@@ -3,7 +3,7 @@
 module MiniLang.Parser where
 
 import Data.Char (isDigit)
-import Control.Applicative (Alternative, empty, (<|>), some)
+import Control.Applicative (Alternative (empty, (<|>), many))
 
 newtype Parser a = Parser (String -> Maybe (a, String))
 
@@ -26,10 +26,19 @@ match p = Parser $ \case
 char :: Char -> Parser Char
 char c = match (== c)
 
+nonZeroDigit :: Parser Char
+nonZeroDigit = match (`elem` "123456789")
+
 number :: Parser Integer
-number = do
-  cs <- some . match $ isDigit
-  return $ read cs
+number =
+  do
+    c <- nonZeroDigit
+    cs <- many . match $ isDigit
+    return . read $ c : cs
+  <|>
+  do
+    c <- match (== '0')
+    return 0
 
 instance Monad Parser where
   return v = Parser $ \cs -> Just(v, cs)
