@@ -16,3 +16,9 @@ add = do
   v <- value
   char '+'
   Add v <$> value
+
+sub :: Parser Expr
+sub = do
+  v <- value
+  char '-'
+  Sub v <$> value

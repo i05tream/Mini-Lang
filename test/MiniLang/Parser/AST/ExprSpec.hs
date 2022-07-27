@@ -20,3 +20,8 @@ spec = do
     context "when String starts with x+x" $ do
       it "succeed in parsing and return Expr" $ do
         parse add "1+2" `shouldBe` Just (Add (Value 1) (Value 2), "")
+
+  describe "sub" $ do
+    context "when String starts with x-x" $ do
+      it "succeed in parsing and return Expr" $ do
+        parse sub "100-21" `shouldBe` Just (Sub (Value 100) (Value 21), "")
