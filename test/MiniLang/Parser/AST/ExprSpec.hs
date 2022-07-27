@@ -31,7 +31,7 @@ spec = do
       it "succeed in parsing and return Expr" $ do
         parse mul "11*11" `shouldBe` Just (Mul (Value 11) (Value 11), "")
 
-  describe "mul" $ do
+  describe "div" $ do
     context "when String starts with x*y" $ do
       it "succeed in parsing and return Expr" $ do
-        parse mul "11*11" `shouldBe` Just (Mul (Value 11) (Value 11), "")
+        parse div "11*11" `shouldBe` Just (Div (Value 11) (Value 11), "")
