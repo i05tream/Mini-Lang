@@ -17,11 +17,21 @@ spec = do
           parse value "0" `shouldBe` Just (Value 0, "")
 
   describe "add" $ do
-    context "when String starts with x+x" $ do
+    context "when String starts with x+y" $ do
       it "succeed in parsing and return Expr" $ do
         parse add "1+2" `shouldBe` Just (Add (Value 1) (Value 2), "")
 
   describe "sub" $ do
-    context "when String starts with x-x" $ do
+    context "when String starts with x-y" $ do
       it "succeed in parsing and return Expr" $ do
         parse sub "100-21" `shouldBe` Just (Sub (Value 100) (Value 21), "")
+
+  describe "mul" $ do
+    context "when String starts with x*y" $ do
+      it "succeed in parsing and return Expr" $ do
+        parse mul "11*11" `shouldBe` Just (Mul (Value 11) (Value 11), "")
+
+  describe "mul" $ do
+    context "when String starts with x*y" $ do
+      it "succeed in parsing and return Expr" $ do
+        parse mul "11*11" `shouldBe` Just (Mul (Value 11) (Value 11), "")
