@@ -3,7 +3,7 @@ module MiniLang.Parser.AST.ExprSpec where
 import Test.Hspec
 import MiniLang.Parser (parse)
 import MiniLang.Parser.AST.Expr
-import MiniLang.Data.AST.Expr (Value(Value))
+import MiniLang.Data.AST.Expr
 
 spec :: Spec
 spec = do
@@ -15,3 +15,8 @@ spec = do
       context "when the letter is number" $ do
         it "return Value" $ do
           parse value "0" `shouldBe` Just (Value 0, "")
+
+  describe "add" $ do
+    context "when String starts with x+x" $ do
+      it "succeed in parsing and return Expr" $ do
+        parse add "1+2" `shouldBe` Just (Add (Value 1) (Value 2), "")
