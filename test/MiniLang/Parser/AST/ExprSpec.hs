@@ -1,9 +1,9 @@
-module MiniLang.Parser.ASTSpec where
+module MiniLang.Parser.AST.ExprSpec where
 
 import Test.Hspec
 import MiniLang.Parser (parse)
-import MiniLang.Parser.AST
-import MiniLang.Data.AST (Value(Value))
+import MiniLang.Parser.AST.Expr
+import MiniLang.Data.AST.Expr (Value(Value))
 
 spec :: Spec
 spec = do
